@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clipcast — Post once. Go viral everywhere.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07080a; --bg2:#0d0f13; --panel:#111419; --line:#1e232b;
+    --ink:#f4f6f8; --mut:#8b94a3; --lime:#c7ff3d; --lime2:#9bff6a;
+    --violet:#8b7bff; --pink:#ff5c93;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.5}
+  ::selection{background:var(--lime);color:#000}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  .lime{color:var(--lime)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(7,8,10,.72);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.5px;display:flex;align-items:center;gap:9px}
+  .logo .d{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--lime),var(--lime2));box-shadow:0 0 18px rgba(199,255,61,.5);transform:rotate(45deg)}
+  .nav-links{display:flex;gap:30px;font-size:14.5px;color:var(--mut)}
+  .nav-links a:hover{color:var(--ink)}
+  .btn{font-family:'Manrope';font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:30px;cursor:pointer;border:none;transition:.2s}
+  .btn-lime{background:var(--lime);color:#060708;box-shadow:0 6px 24px -6px rgba(199,255,61,.5)}
+  .btn-lime:hover{transform:translateY(-2px);box-shadow:0 10px 30px -6px rgba(199,255,61,.65)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--lime);color:var(--lime)}
+
+  /* hero */
+  header{position:relative;padding:92px 0 70px;text-align:center;overflow:hidden}
+  header::before{content:"";position:absolute;top:-180px;left:50%;transform:translateX(-50%);width:900px;height:600px;
+    background:radial-gradient(ellipse at center, rgba(199,255,61,.16), transparent 62%);pointer-events:none}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mut);border:1px solid var(--line);
+    padding:7px 15px;border-radius:30px;margin-bottom:26px;background:var(--panel)}
+  .pill b{color:var(--lime)}
+  h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(42px,7vw,78px);line-height:1.02;letter-spacing:-1.5px;margin-bottom:22px}
+  h1 em{font-style:normal;background:linear-gradient(120deg,var(--lime),var(--lime2) 60%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(16px,2.2vw,20px);color:var(--mut);max-width:620px;margin:0 auto 34px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn-lg{padding:15px 30px;font-size:16px}
+  .micro{margin-top:16px;font-size:13px;color:var(--mut)}
+
+  /* flow visual */
+  .flow{position:relative;max-width:900px;margin:60px auto 0;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .drop{flex:none;width:200px;height:150px;border:2px dashed #2a3340;border-radius:20px;display:grid;place-content:center;text-align:center;
+    background:var(--panel);transition:.3s;animation:pulseborder 3s infinite}
+  @keyframes pulseborder{0%,100%{border-color:#2a3340}50%{border-color:var(--lime)}}
+  .drop .ic{font-size:34px;margin-bottom:8px}
+  .drop b{font-size:14px} .drop small{color:var(--mut);font-size:12px;display:block;margin-top:3px}
+  .engine{flex:none;width:118px;height:118px;border-radius:50%;display:grid;place-content:center;text-align:center;position:relative;
+    background:radial-gradient(circle at 35% 30%,#1a1f16,#0b0d0a);border:1px solid var(--line);box-shadow:0 0 40px rgba(199,255,61,.25)}
+  .engine .ring{position:absolute;inset:-6px;border-radius:50%;border:2px solid transparent;border-top-color:var(--lime);animation:spin 3s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .engine .lg2{font-family:'Syne';font-weight:800;font-size:13px;color:var(--lime)}
+  .engine .em{font-size:26px}
+  .outs{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .out{display:flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:13.5px;font-weight:600;
+    animation:popin .5s ease both}
+  .out .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+  .out .ico{font-size:17px}
+  @keyframes popin{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+  .out:nth-child(1){animation-delay:.1s}.out:nth-child(2){animation-delay:.25s}.out:nth-child(3){animation-delay:.4s}.out:nth-child(4){animation-delay:.55s}
+  .line{position:absolute;height:2px;background:linear-gradient(90deg,var(--lime),transparent);opacity:.4}
+
+  /* strip */
+  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin-top:70px;background:var(--bg2)}
+  .strip .wrap{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;color:var(--mut);font-size:14px;font-weight:600}
+  .strip span{opacity:.85}
+
+  /* sections */
+  section{padding:92px 0}
+  .eyebrow{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lime);text-align:center;margin-bottom:14px}
+  h2{font-family:'Syne';font-weight:800;font-size:clamp(30px,4.5vw,46px);line-height:1.05;letter-spacing:-1px;text-align:center;margin-bottom:16px}
+  .lead{text-align:center;color:var(--mut);max-width:560px;margin:0 auto 54px;font-size:17px}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;position:relative;transition:.3s}
+  .step:hover{transform:translateY(-6px);border-color:#2f3947}
+  .step .n{font-family:'Syne';font-weight:800;font-size:15px;color:var(--lime);margin-bottom:16px}
+  .step .em{font-size:30px;margin-bottom:14px}
+  .step h3{font-family:'Syne';font-weight:700;font-size:21px;margin-bottom:9px}
+  .step p{color:var(--mut);font-size:15px}
+
+  /* dashboard preview */
+  .preview{background:linear-gradient(180deg,var(--bg2),var(--bg));border:1px solid var(--line);border-radius:24px;padding:14px;margin-top:10px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+  .pv-bar{display:flex;align-items:center;gap:7px;padding:10px 14px}
+  .pv-bar i{width:11px;height:11px;border-radius:50%;background:#2a3340}
+  .pv-bar i:nth-child(1){background:#ff5f57}.pv-bar i:nth-child(2){background:#febc2e}.pv-bar i:nth-child(3){background:#28c840}
+  .pv-bar .u{margin-left:12px;font-size:12px;color:var(--mut);background:var(--bg);padding:5px 14px;border-radius:8px;border:1px solid var(--line)}
+  .pv-body{display:grid;grid-template-columns:200px 1fr;gap:14px;padding:14px}
+  .pv-side{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:13px}
+  .pv-side .si{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;color:var(--mut);margin-bottom:3px}
+  .pv-side .si.on{background:rgba(199,255,61,.1);color:var(--lime);font-weight:600}
+  .pv-main{display:flex;flex-direction:column;gap:12px}
+  .pv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .pv-stat{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .pv-stat .k{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+  .pv-stat .v{font-family:'Syne';font-weight:800;font-size:28px;margin-top:4px}
+  .pv-stat .v small{font-size:14px;color:var(--lime)}
+  .pv-feed{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;flex:1}
+  .pv-feed .row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .pv-feed .row:last-child{border:none}
+  .pv-feed .th{width:34px;height:44px;border-radius:7px;background:linear-gradient(135deg,#1b2230,#2a3440);flex:none}
+  .pv-feed .tag{margin-left:auto;font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(199,255,61,.12);color:var(--lime);font-weight:600}
+  .pv-feed .tag.sch{background:rgba(139,123,255,.14);color:var(--violet)}
+
+  /* pricing */
+  .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px}
+  .price.hot{border-color:var(--lime);box-shadow:0 0 50px -16px rgba(199,255,61,.4);position:relative}
+  .price.hot::before{content:"MOST POPULAR";position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--lime);color:#060708;font-size:10px;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:20px}
+  .price .pn{font-family:'Syne';font-weight:700;font-size:19px}
+  .price .amt{font-family:'Syne';font-weight:800;font-size:42px;margin:12px 0 2px}
+  .price .amt small{font-size:15px;color:var(--mut);font-weight:500}
+  .price ul{list-style:none;margin:20px 0 24px}
+  .price li{font-size:14.5px;color:var(--mut);padding:7px 0;display:flex;gap:9px}
+  .price li::before{content:"✓";color:var(--lime);font-weight:700}
+  .price .btn{width:100%}
+
+  /* final cta */
+  .final{text-align:center;background:linear-gradient(135deg,rgba(199,255,61,.08),rgba(139,123,255,.06));border:1px solid var(--line);border-radius:28px;padding:64px 30px;margin:30px 0}
+
+  footer{border-top:1px solid var(--line);padding:40px 0;text-align:center;color:var(--mut);font-size:13.5px}
+
+  @media(max-width:860px){.nav-links{display:none}.flow{flex-direction:column}.outs{grid-template-columns:1fr 1fr;width:100%}
+    .steps,.prices{grid-template-columns:1fr}.pv-body{grid-template-columns:1fr}.pv-side{display:none}.pv-stats{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="logo"><span class="d"></span>Clipcast</div>
+  <div class="nav-links"><a href="#how">How it works</a><a href="#product">Product</a><a href="#pricing">Pricing</a></div>
+  <button class="btn btn-lime">Start free →</button>
+</div></nav>
+
+<header><div class="wrap">
+  <div class="pill">🔥 <b>Turn 1 drop into 50 posts</b> — on autopilot</div>
+  <h1>Post once.<br><em>Go viral everywhere.</em></h1>
+  <p class="sub">Drop your content. Clipcast's AI clips it, captions it, adds the music, and blasts it to TikTok, Reels, Shorts & Pinterest — automatically, at the perfect times.</p>
+  <div class="cta-row">
+    <button class="btn btn-lime btn-lg">Start free — drop your first clip</button>
+    <button class="btn btn-ghost btn-lg">Watch 60s demo ▶</button>
+  </div>
+  <div class="micro">No editing. No scheduling. No posting. Just drop & grow.</div>
+
+  <div class="flow">
+    <div class="drop"><div class="ic">📥</div><b>Drop your content</b><small>videos · photos · clips</small></div>
+    <div class="engine"><div class="ring"></div><div class="em">⚡</div><div class="lg2">AI ENGINE</div></div>
+    <div class="outs">
+      <div class="out"><span class="dot"></span><span class="ico">🎵</span>TikTok</div>
+      <div class="out"><span class="dot"></span><span class="ico">📸</span>Reels</div>
+      <div class="out"><span class="dot"></span><span class="ico">▶️</span>Shorts</div>
+      <div class="out"><span class="dot"></span><span class="ico">📌</span>Pinterest</div>
+    </div>
+  </div>
+</div></header>
+
+<div class="strip"><div class="wrap">
+  <span>Posts to:</span><span>🎵 TikTok</span><span>📸 Instagram</span><span>▶️ YouTube</span><span>📌 Pinterest</span><span>𝕏 X</span><span>👻 +18 more</span>
+</div></div>
+
+<section id="how"><div class="wrap">
+  <div class="eyebrow">How it works</div>
+  <h2>Three steps. Zero effort.</h2>
+  <p class="lead">You drop the content. The AI does literally everything else, 24/7.</p>
+  <div class="steps">
+    <div class="step"><div class="n">01</div><div class="em">📥</div><h3>Drop it</h3><p>Drag & drop a folder — or connect your camera roll. Raw videos, photos, long streams, whatever you've got.</p></div>
+    <div class="step"><div class="n">02</div><div class="em">🧠</div><h3>AI does the work</h3><p>It clips the best moments, writes captions in your voice, picks the music, kills duplicates, and finds the perfect post times.</p></div>
+    <div class="step"><div class="n">03</div><div class="em">🚀</div><h3>It posts everywhere</h3><p>Auto-posts across every platform on a human-like schedule. You watch the followers roll in. Flag-safe by design.</p></div>
+  </div>
+</div></section>
+
+<section id="product" style="padding-top:20px"><div class="wrap">
+  <div class="eyebrow">The dashboard</div>
+  <h2>Your whole presence, one screen.</h2>
+  <p class="lead">See every clip sorted, scheduled, and posted — plus what's winning.</p>
+  <div class="preview">
+    <div class="pv-bar"><i></i><i></i><i></i><span class="u">app.clipcast.io</span></div>
+    <div class="pv-body">
+      <div class="pv-side">
+        <div class="si on">📊 Overview</div><div class="si">📥 Library</div><div class="si">🗓️ Calendar</div>
+        <div class="si">🤖 Agents</div><div class="si">📈 Analytics</div><div class="si">⚙️ Settings</div>
+      </div>
+      <div class="pv-main">
+        <div class="pv-stats">
+          <div class="pv-stat"><div class="k">In library</div><div class="v">1,243</div></div>
+          <div class="pv-stat"><div class="k">Posted today</div><div class="v">18<small>/24</small></div></div>
+          <div class="pv-stat"><div class="k">New followers</div><div class="v">+2.4k</div></div>
+        </div>
+        <div class="pv-feed">
+          <div class="row"><div class="th"></div>glam_rooftop_shoot.mp4<span class="tag">posted · TikTok</span></div>
+          <div class="row"><div class="th"></div>bts_studio_cut.mp4<span class="tag sch">scheduled · 7:10pm</span></div>
+          <div class="row"><div class="th"></div>beach_travel_reel.mp4<span class="tag">posted · Reels</span></div>
+          <div class="row"><div class="th"></div>performance_clip.mp4<span class="tag sch">scheduled · 9:40pm</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="pricing" style="padding-top:20px"><div class="wrap">
+  <div class="eyebrow">Pricing</div>
+  <h2>Grow on autopilot.</h2>
+  <p class="lead">Start free. Scale when you blow up.</p>
+  <div class="prices">
+    <div class="price"><div class="pn">Starter</div><div class="amt">$29<small>/mo</small></div>
+      <ul><li>1 brand</li><li>All platforms</li><li>AI clips + captions</li><li>Auto-scheduling</li></ul>
+      <button class="btn btn-ghost">Start free</button></div>
+    <div class="price hot"><div class="pn">Creator</div><div class="amt">$79<small>/mo</small></div>
+      <ul><li>Up to 3 brands</li><li>Everything in Starter</li><li>Viral-sound drafts</li><li>Weekly growth reports</li><li>Priority posting</li></ul>
+      <button class="btn btn-lime">Go viral →</button></div>
+    <div class="price"><div class="pn">Agency</div><div class="amt">$249<small>/mo</small></div>
+      <ul><li>Unlimited brands</li><li>White-label dashboard</li><li>Client sub-accounts</li><li>API access</li></ul>
+      <button class="btn btn-ghost">Talk to us</button></div>
+  </div>
+</div></section>
+
+<section style="padding-top:20px"><div class="wrap"><div class="final">
+  <h2 style="margin-bottom:14px">Stop posting. Start blowing up.</h2>
+  <p class="lead" style="margin-bottom:28px">Drop your content once. Clipcast does the rest — forever.</p>
+  <button class="btn btn-lime btn-lg">Drop your first clip free →</button>
+</div></div></section>
+
+<footer><div class="wrap"><div class="logo" style="justify-content:center;margin-bottom:10px"><span class="d"></span>Clipcast</div>
+  Post once. Go viral everywhere. · © 2026 Clipcast</div></footer>
+
+</body>
+</html>
