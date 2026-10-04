@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clipcast — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#07080a;--bg2:#0d0f13;--panel:#111419;--line:#1e232b;--ink:#f4f6f8;--mut:#8b94a3;
+    --lime:#c7ff3d;--lime2:#9bff6a;--violet:#8b7bff;--pink:#ff5c93}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.5}
+  ::selection{background:var(--lime);color:#000}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.5px;display:flex;align-items:center;gap:10px;justify-content:center}
+  .logo .d{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--lime),var(--lime2));box-shadow:0 0 18px rgba(199,255,61,.5);transform:rotate(45deg)}
+
+  /* LOGIN */
+  #login{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:24px;
+    background:radial-gradient(800px 500px at 50% -10%,rgba(199,255,61,.12),transparent 60%),var(--bg)}
+  .card{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:40px 34px;text-align:center}
+  .card .tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--mut);margin:18px 0 6px}
+  .card h2{font-family:'Syne';font-weight:800;font-size:26px;letter-spacing:-.5px;margin-bottom:26px}
+  .inp{width:100%;font-family:'Manrope';font-size:22px;letter-spacing:8px;text-align:center;padding:15px;border-radius:14px;
+    border:1px solid var(--line);background:var(--bg2);color:var(--ink);outline:none;transition:.2s}
+  .inp:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(199,255,61,.15)}
+  .btn{width:100%;margin-top:16px;font-family:'Manrope';font-weight:700;font-size:16px;padding:15px;border-radius:30px;cursor:pointer;border:none;
+    background:var(--lime);color:#060708;box-shadow:0 6px 24px -6px rgba(199,255,61,.5);transition:.2s}
+  .btn:hover{transform:translateY(-2px)}
+  .err{color:var(--pink);font-size:13px;margin-top:12px;height:16px}
+  .hint{color:var(--mut);font-size:12px;margin-top:18px}
+
+  /* APP */
+  #app{display:none;max-width:1080px;margin:0 auto;padding:30px 28px 70px}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}
+  .logo.sm{font-size:21px;justify-content:flex-start}
+  .out-btn{font-size:13px;color:var(--mut);border:1px solid var(--line);padding:9px 16px;border-radius:30px;cursor:pointer;background:transparent;font-family:'Manrope';font-weight:600}
+  .out-btn:hover{border-color:var(--pink);color:var(--pink)}
+  .hd{font-family:'Syne';font-weight:800;font-size:30px;letter-spacing:-1px;margin-bottom:5px}
+  .hd em{font-style:normal;color:var(--lime)}
+  .sub{color:var(--mut);font-size:15px;margin-bottom:28px}
+  .clients{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+  .client{display:block;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;cursor:pointer;transition:.22s;position:relative;overflow:hidden}
+  .client:hover{transform:translateY(-4px);border-color:var(--lime)}
+  .client .av{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-family:'Syne';font-weight:800;font-size:22px;margin-bottom:16px}
+  .client.ix .av{background:radial-gradient(circle at 35% 30%,#ffd0e2,var(--pink) 72%);color:#3d0d22;box-shadow:0 0 24px rgba(255,92,147,.5)}
+  .client .nm{font-family:'Syne';font-weight:700;font-size:19px;letter-spacing:-.3px}
+  .client .meta{color:var(--mut);font-size:13px;margin-top:4px}
+  .client .live{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-size:12px;color:var(--lime);background:rgba(199,255,61,.1);padding:5px 12px;border-radius:20px}
+  .client .live .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+  .client .go{position:absolute;top:24px;right:24px;color:var(--mut);font-size:20px;transition:.2s}
+  .client:hover .go{color:var(--lime);transform:translateX(3px)}
+  .add{border:1.5px dashed #2a3340;background:transparent;display:grid;place-content:center;text-align:center;color:var(--mut);min-height:180px}
+  .add:hover{border-color:var(--lime);color:var(--lime)}
+  .add .pl{font-size:32px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="card">
+    <div class="logo"><span class="d"></span>Clipcast</div>
+    <div class="tag">Admin access</div>
+    <h2>Welcome back</h2>
+    <input id="code" class="inp" type="password" inputmode="numeric" maxlength="8" placeholder="• • • •" autocomplete="off">
+    <button class="btn" onclick="tryLogin()">Enter →</button>
+    <div class="err" id="err"></div>
+    <div class="hint">Enter your 4-digit admin code</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="top">
+    <div class="logo sm"><span class="d"></span>Clipcast</div>
+    <button class="out-btn" onclick="logout()">Log out</button>
+  </div>
+  <div class="hd">Your <em>clients</em></div>
+  <div class="sub">Pick a client to open their content machine &amp; dashboard.</div>
+  <div class="clients">
+    <a class="client ix" href="dashboard.html">
+      <span class="go">→</span>
+      <div class="av">IX</div>
+      <div class="nm">Inas X</div>
+      <div class="meta">Pop artist · 3.4M · client #1</div>
+      <div class="live"><span class="dot"></span>Pinterest live</div>
+    </a>
+    <div class="client add" onclick="alert('Add-client flow comes with the full product build.')">
+      <div><div class="pl">+</div>Add a client</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function show(){document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';}
+  function tryLogin(){
+    var c=document.getElementById('code').value.trim();
+    if(c==='1234'){sessionStorage.setItem('cc_admin','1');show();}
+    else{document.getElementById('err').textContent='Wrong code — try again';document.getElementById('code').value='';}
+  }
+  function logout(){sessionStorage.removeItem('cc_admin');location.reload();}
+  document.getElementById('code').addEventListener('keydown',function(e){if(e.key==='Enter')tryLogin();});
+  if(sessionStorage.getItem('cc_admin')==='1')show();
+  document.getElementById('code').focus();
+</script>
+</body>
+</html>
